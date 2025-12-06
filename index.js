@@ -22,8 +22,8 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: "v4", auth });
 
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // Replace with your sheet ID
-const RANGE = "ACPOTD!B:C"; // Adjust the range if needed
-const CHANNEL_ID = "1444739857913217034"; // Replace with the POTD Discord channel ID
+const RANGE = "ACPOTD!A:B"; // Adjust the range if needed
+const CHANNEL_ID = "1441540640352768101"; // Replace with the POTD Discord channel ID
 const LAST_FETCHED_FILE = "lastFetchedIndex.json"; // File to store the index of the last fetched question
 
 // Load the last fetched index and POTD number from the file (or default to 0 and 1)
@@ -82,7 +82,7 @@ async function sendProblemOfTheDay() {
   const message = `
 🎯 **Problem of the Day (POTD #${potdNumber})**
 📆 **Date: ${today}**  
-@2025 @lead-2024
+<@&1422660941626998784> <@&1441479212182671591>
 
 🔸 **Task 1:** [${questions[0][0]}](${questions[0][1]})  
 🔸 **Task 2:** [${questions[1][0]}](${questions[1][1]})  
@@ -94,7 +94,9 @@ React with:
 
   try {
     const channel = await client.channels.fetch(CHANNEL_ID);
-    await channel.send(message);
+    const msg = await channel.send(message);
+    await msg.react("1️⃣");
+    await msg.react("2️⃣");
   } catch (error) {
     console.error("Error sending message:", error);
   }
